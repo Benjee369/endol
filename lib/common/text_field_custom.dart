@@ -44,12 +44,12 @@ class TextFieldCustom extends StatelessWidget {
           onChanged: onChange,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
-              vertical: Sizes.p20, // Adjust the vertical padding
-              horizontal: Sizes.p32, // Adjust the horizontal padding
+              vertical: 23, // Adjust the vertical padding
+              horizontal: Sizes.p24, // Adjust the horizontal padding
             ),
             counterText: "",
             filled: true,
-            fillColor: AppColors.lightBrown,
+            fillColor: AppColors.cream,
             hintText: hint,
             suffixIcon: dontShowText != null
                 ? IconButton(
@@ -72,7 +72,7 @@ class TextFieldCustom extends StatelessWidget {
             hintStyle: const TextStyle(
               fontFamily: Fonts.regular,
               fontSize: 14,
-              color: AppColors.cream,
+              color: AppColors.black,
             ),
             //fillColor: Colors.white,
             border: const OutlineInputBorder(

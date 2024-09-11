@@ -1,7 +1,7 @@
 import 'package:endol/common/text_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/app_colors.dart';
+import '../../constants/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

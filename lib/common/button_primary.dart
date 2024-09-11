@@ -9,6 +9,7 @@ class ButtonPrimary extends StatelessWidget {
   final VoidCallback function;
   final Color? color;
   final double? width;
+  final double? height;
   final double? textSize;
   final bool? active;
   final bool isLoading; // Add this line to accept isLoading
@@ -21,6 +22,7 @@ class ButtonPrimary extends StatelessWidget {
     this.textSize,
     this.active,
     this.width,
+    this.height,
     this.isLoading = false, // Add this line to the constructor
   });
 
@@ -28,6 +30,7 @@ class ButtonPrimary extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width ?? MediaQuery.of(context).size.width,
+      height: height ?? MediaQuery.of(context).size.height,
       child: ElevatedButton(
         onPressed: active == true && !isLoading
             ? function
@@ -51,6 +54,7 @@ class ButtonPrimary extends StatelessWidget {
                   size: textSize ?? 16,
                   color: Colors.white,
                   fontFamily: Fonts.semiBold,
+                  fontWeight: FontWeight.w800,
                 ),
         ),
       ),

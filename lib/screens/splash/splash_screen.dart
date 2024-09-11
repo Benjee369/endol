@@ -1,9 +1,11 @@
-import 'package:endol/screens/login_screen.dart';
+import 'package:endol/constants/app_sizes.dart';
+import 'package:endol/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:endol/app_navigation/navigation.dart';
 import 'package:endol/constants/app_colors.dart';
 import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/strings.dart';
+import 'package:extended_image/extended_image.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -31,18 +33,26 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: AppColors.thatBrown,
-      body: Stack(
-        children: [
-          Center(
-            child: TextWidget(
-              text: Strings.appName,
-              size: 50,
-              color: AppColors.pureWhite,
-            ),
-          )
-        ],
+    double screenHeight = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      backgroundColor: AppColors.pureWhite,
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(8, screenHeight * 0.5, 8, 8),
+        child: Center(
+          child: Column(
+            children: [
+              ExtendedImage.asset(
+                'assets/images/logo.png',
+                scale: 1.1,
+              ),
+              gapH48,
+              ExtendedImage.asset('assets/images/endol.png'),
+              gapH16,
+              ExtendedImage.asset('assets/images/slogan.png'),
+            ],
+          ),
+        ),
       ),
     );
   }

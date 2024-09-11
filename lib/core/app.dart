@@ -2,7 +2,7 @@ import 'package:endol/constants/app_colors.dart';
 import 'package:endol/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/splash_screen.dart';
+import '../screens/splash/splash_screen.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
