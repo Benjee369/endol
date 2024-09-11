@@ -29,86 +29,84 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 270, 20, 0),
-          child: Container(
-            child: Column(
-              children: [
-                const TextWidget(
-                  text: Strings.welcome,
-                  size: 40,
-                ),
-                gapH16,
-                TextFieldCustom(
-                  hint: Strings.emailAddress,
-                  controller: emailController,
-                  inputType: TextInputType.text,
-                ),
-                gapH16,
-                TextFieldCustom(
-                  hint: Strings.password,
-                  controller: passwordController,
-                  inputType: TextInputType.text,
-                ),
-                gapH8,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: isChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              isChecked = value!;
-                            });
-                          },
-                        ),
-                        const TextWidget(text: Strings.rememberMe),
-                      ],
-                    ),
-                    const InkWell(
-                      child: TextWidget(
-                        text: Strings.forgotPassword,
-                        color: Colors.blue,
+          child: Column(
+            children: [
+              const TextWidget(
+                text: Strings.welcome,
+                size: 40,
+              ),
+              gapH16,
+              TextFieldCustom(
+                hint: Strings.emailAddress,
+                controller: emailController,
+                inputType: TextInputType.text,
+              ),
+              gapH16,
+              TextFieldCustom(
+                hint: Strings.password,
+                controller: passwordController,
+                inputType: TextInputType.text,
+              ),
+              gapH8,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        },
                       ),
-                    ),
-                  ],
-                ),
-                ButtonPrimary(
-                  text: Strings.login,
-                  function: () {
-                    if (isButtonActive == true) {
-                      Navigation.navigateTo(
-                        context,
-                        const HomeScreen(),
-                      );
-                    }
-                  },
-                  active: true,
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 19, 0, 19),
-                  child: Divider(
-                    color: AppColors.pureWhite,
-                    height: 2.0,
+                      const TextWidget(text: Strings.rememberMe),
+                    ],
                   ),
+                  const InkWell(
+                    child: TextWidget(
+                      text: Strings.forgotPassword,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+              ButtonPrimary(
+                text: Strings.login,
+                function: () {
+                  if (isButtonActive == true) {
+                    Navigation.navigateTo(
+                      context,
+                      const HomeScreen(),
+                    );
+                  }
+                },
+                active: true,
+              ),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 19, 0, 19),
+                child: Divider(
+                  color: AppColors.pureWhite,
+                  height: 2.0,
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     const TextWidget(text: Strings.dontHaveAnAccount),
-                //     InkWell(
-                //       onTap: Navigation.navigateTo(
-                //         context,
-                //         const CreateAccountScreen(),
-                //       ),
-                //       child: const TextWidget(
-                //         text: Strings.createAccount,
-                //       ),
-                //     ),
-                //   ],
-                // ),
-              ],
-            ),
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     const TextWidget(text: Strings.dontHaveAnAccount),
+              //     InkWell(
+              //       onTap: Navigation.navigateTo(
+              //         context,
+              //         const CreateAccountScreen(),
+              //       ),
+              //       child: const TextWidget(
+              //         text: Strings.createAccount,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+            ],
           ),
         ),
       ),

@@ -15,12 +15,17 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(milliseconds: 2000), () {
-      Navigation.navigateAndReplace(
-        context,
-        const LoginScreen(),
-      );
-    });
+    Future.delayed(
+      const Duration(milliseconds: 2000),
+      () {
+        if (mounted) {
+          Navigation.navigateAndReplace(
+            context,
+            const LoginScreen(),
+          );
+        }
+      },
+    );
     super.initState();
   }
 
