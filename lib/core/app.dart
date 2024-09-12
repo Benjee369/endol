@@ -1,6 +1,8 @@
 import 'package:endol/constants/app_colors.dart';
 import 'package:endol/constants/fonts.dart';
+import 'package:endol/providers/current_index_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/splash/splash_screen.dart';
 
@@ -14,13 +16,18 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        fontFamily: Fonts.medium,
-        splashColor: AppColors.lightBrown.withOpacity(0.15),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CurrentIndexProvider())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: const SplashScreen(),
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          fontFamily: Fonts.medium,
+          splashColor: AppColors.lightBrown.withOpacity(0.15),
+        ),
       ),
     );
   }

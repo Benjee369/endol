@@ -1,4 +1,7 @@
+import 'package:endol/app_navigation/home_navigation.dart';
 import 'package:endol/constants/app_sizes.dart';
+import 'package:endol/screens/create_account/create_account_screen.dart';
+import 'package:endol/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:endol/app_navigation/navigation.dart';
 import 'package:endol/constants/app_colors.dart';
@@ -64,12 +67,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 180,
                 text: Strings.login,
                 function: () {
-                  if (isButtonActive == true) {
-                    Navigation.navigateTo(
-                      context,
-                      const HomeScreen(),
-                    );
-                  }
+                  Navigation.navigateAndReplace(
+                    context,
+                    const HomeNavigation(),
+                  );
                 },
                 active: true,
               ),
@@ -91,12 +92,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 61,
                       text: Strings.createAccount,
                       function: () {
-                        if (isButtonActive == true) {
-                          Navigation.navigateTo(
-                            context,
-                            const HomeScreen(),
-                          );
-                        }
+                        Navigation.navigateAndReplace(
+                          context,
+                          const CreateAccountScreen(),
+                        );
                       },
                       active: true,
                     ),

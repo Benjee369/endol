@@ -1,7 +1,10 @@
 import 'package:endol/common/text_widget.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-
 import '../../constants/app_colors.dart';
+import '../../constants/strings.dart';
+import 'package:provider/provider.dart';
+import '../../providers/current_index_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,26 +16,24 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final currentIndexProvider = Provider.of<CurrentIndexProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColors.pureWhite,
       appBar: AppBar(
-        centerTitle: true,
         backgroundColor: AppColors.cream,
-        title: const TextWidget(
-          text: 'Endl',
-          fontWeight: FontWeight.bold,
+        title: Center(
+          child: ExtendedImage.asset(
+            'assets/images/endol.png',
+            scale: 4,
+          ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: AppColors.thatBrown,
-            ),
-            onPressed: () {
-              // do something
-            },
-          )
-        ],
+      ),
+      body: const Center(
+        child: TextWidget(
+          text: 'Hello',
+          size: 80,
+        ),
       ),
     );
   }
