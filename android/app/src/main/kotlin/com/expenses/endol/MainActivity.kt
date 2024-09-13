@@ -1,4 +1,4 @@
-package com.example.endol
+package com.expenses.endol
 
 import io.flutter.embedding.android.FlutterActivity
 

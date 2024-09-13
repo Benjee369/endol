@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "560636145219",
+    "project_id": "endol-6183d",
+    "storage_bucket": "endol-6183d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560636145219:android:54cfabad88023e42e36ef6",
+        "android_client_info": {
+          "package_name": "com.expenses.endol"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5g6T7GdLuMLyiTCIA_zJgcQ9OMw84jds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
