@@ -3,8 +3,6 @@ import 'package:endol/screens/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:endol/app_navigation/navigation.dart';
 import 'package:endol/constants/app_colors.dart';
-import 'package:endol/common/text_widget.dart';
-import 'package:endol/constants/strings.dart';
 import 'package:extended_image/extended_image.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,6 +15,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    //after waiting for 2 seconds it takes you to the login screen
     Future.delayed(
       const Duration(milliseconds: 2000),
       () {

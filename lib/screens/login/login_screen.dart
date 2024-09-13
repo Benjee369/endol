@@ -1,7 +1,6 @@
 import 'package:endol/app_navigation/home_navigation.dart';
 import 'package:endol/constants/app_sizes.dart';
 import 'package:endol/screens/create_account/create_account_screen.dart';
-import 'package:endol/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:endol/app_navigation/navigation.dart';
 import 'package:endol/constants/app_colors.dart';
@@ -10,8 +9,6 @@ import 'package:endol/constants/strings.dart';
 import 'package:endol/common/text_field_custom.dart';
 import 'package:endol/common/button_primary.dart';
 import 'package:extended_image/extended_image.dart';
-
-import '../home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -67,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 180,
                 text: Strings.login,
                 function: () {
-                  Navigation.navigateAndReplace(
+                  Navigation.navigateTo(
                     context,
                     const HomeNavigation(),
                   );
@@ -92,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 61,
                       text: Strings.createAccount,
                       function: () {
-                        Navigation.navigateAndReplace(
+                        Navigation.navigateTo(
                           context,
                           const CreateAccountScreen(),
                         );
