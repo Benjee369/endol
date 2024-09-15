@@ -1,8 +1,8 @@
 class Strings {
   static const String appName = "Endol";
   static const String ok = "Ok";
-
   static const String slogan = "Don't let your expenses track you";
+
   //LOGIN SCREEN
   static const String emailAddress = "Email Address";
   static const String password = "Password";
@@ -12,4 +12,9 @@ class Strings {
   static const String login = "LOGIN";
   static const String createAccount = "CREATE ACCOUNT";
   static const String dontHaveAnAccount = "Dont have an Account? ";
+
+  static const String firstName = "First Name";
+  static const String lastName = "Last Name";
+  static const String confirmPassword = "Confirm Password";
+  static const String next = "Next";
 }
