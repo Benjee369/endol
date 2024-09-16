@@ -13,8 +13,7 @@ class Strings {
   static const String createAccount = "CREATE ACCOUNT";
   static const String dontHaveAnAccount = "Dont have an Account? ";
 
-  static const String firstName = "First Name";
-  static const String lastName = "Last Name";
+  static const String fullName = "Full Name";
   static const String confirmPassword = "Confirm Password";
   static const String next = "Next";
 }
