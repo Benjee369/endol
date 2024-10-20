@@ -30,7 +30,7 @@ class ButtonPrimary extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width ?? MediaQuery.of(context).size.width,
-      height: height ?? MediaQuery.of(context).size.height,
+      height: height ?? 60,
       child: ElevatedButton(
         onPressed: active == true && !isLoading
             ? function
@@ -43,20 +43,17 @@ class ButtonPrimary extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20),
-          child: isLoading // Display a CircularProgressIndicator when loading
-              ? const CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                )
-              : TextWidget(
-                  text: text,
-                  size: textSize ?? 16,
-                  color: Colors.white,
-                  fontFamily: Fonts.semiBold,
-                  fontWeight: FontWeight.w800,
-                ),
-        ),
+        child: isLoading // Display a CircularProgressIndicator when loading
+            ? const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.thatBrown),
+              )
+            : TextWidget(
+                text: text,
+                size: textSize ?? 16,
+                color: Colors.white,
+                fontFamily: Fonts.semiBold,
+                fontWeight: FontWeight.w800,
+              ),
       ),
     );
   }
