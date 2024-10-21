@@ -15,6 +15,8 @@ class AddExpenseTextField extends StatelessWidget {
   final bool? autoCorrect;
   final String? prefixText;
   final TextCapitalization? textCapitalization;
+  final Widget? prefixIcon;
+
   const AddExpenseTextField(
       {super.key,
       required this.hint,
@@ -26,7 +28,8 @@ class AddExpenseTextField extends StatelessWidget {
       this.prefixText,
       required this.controller,
       required this.inputType,
-      this.maxLength});
+      this.maxLength,
+      this.prefixIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +72,7 @@ class AddExpenseTextField extends StatelessWidget {
                     color: AppColors.thatBrown,
                   )
                 : null,
+            prefixIcon: prefixIcon,
             hintStyle: const TextStyle(
               fontSize: 14,
               color: AppColors.textFieldHint,

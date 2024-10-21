@@ -59,6 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       } else {
+        setState(() {
+          isLoading = false;
+        });
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -155,7 +158,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                         child: ButtonPrimary(
-                          isLoading: isLoading,
                           height: 61,
                           text: Strings.createAccount,
                           function: () {
