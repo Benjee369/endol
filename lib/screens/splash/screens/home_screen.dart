@@ -8,11 +8,11 @@ import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import '../../constants/app_colors.dart';
+import '../../../constants/app_colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../constants/strings.dart';
+import '../../../constants/strings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

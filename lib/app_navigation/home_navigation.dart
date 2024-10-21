@@ -1,6 +1,6 @@
 import 'package:endol/providers/current_index_provider.dart';
 import 'package:endol/screens/chart/chart_screen.dart';
-import 'package:endol/screens/home/home_screen.dart';
+import 'package:endol/screens/splash/screens/home_screen.dart';
 import 'package:endol/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';

@@ -1,14 +1,14 @@
-import 'package:endol/screens/login/login_screen.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:endol/constants/app_colors.dart';
 import 'package:endol/common/text_field_custom.dart';
 import 'package:endol/common/button_primary.dart';
-import '../../app_navigation/navigation.dart';
-import '../../auth/firebase_auth_services.dart';
-import '../../constants/app_sizes.dart';
-import '../../constants/strings.dart';
+import '../../../app_navigation/navigation.dart';
+import 'login_screen.dart';
+import 'services/firebase_auth_services.dart';
+import '../../../constants/app_sizes.dart';
+import '../../../constants/strings.dart';
 
 //ignore_for_file:avoid_print
 

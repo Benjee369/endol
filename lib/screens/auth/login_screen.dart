@@ -1,6 +1,5 @@
 import 'package:endol/app_navigation/home_navigation.dart';
 import 'package:endol/constants/app_sizes.dart';
-import 'package:endol/screens/create_account/create_account_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:endol/app_navigation/navigation.dart';
@@ -11,8 +10,9 @@ import 'package:endol/common/text_field_custom.dart';
 import 'package:endol/common/button_primary.dart';
 import 'package:extended_image/extended_image.dart';
 
-import '../../auth/firebase_auth_services.dart';
-import '../../common/dialogs.dart';
+import 'create_account_screen.dart';
+import 'services/firebase_auth_services.dart';
+import '../../../common/dialogs.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -59,7 +59,13 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       } else {
-        throw Exception("Login failed");
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: TextWidget(text: 'An error occurred during login'),
+            ),
+          );
+        }
       }
     } catch (e) {
       print('Failed to login: $e');
@@ -68,9 +74,11 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       if (mounted) {
-        Dialogs.dialogInform(context, '$e', () {
-          Navigator.pop(context);
-        }, null);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: TextWidget(text: '$e'),
+          ),
+        );
       }
     }
   }
