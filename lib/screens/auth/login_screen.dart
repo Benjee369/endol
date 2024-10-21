@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {
             isLoading = false;
           });
-          Navigation.navigateTo(
+          Navigation.navigateAndReplace(
             context,
             const HomeNavigation(),
           );

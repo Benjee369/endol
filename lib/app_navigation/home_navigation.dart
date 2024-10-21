@@ -1,13 +1,12 @@
 import 'package:endol/providers/current_index_provider.dart';
 import 'package:endol/screens/chart/chart_screen.dart';
-import 'package:endol/screens/splash/screens/home_screen.dart';
 import 'package:endol/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
 import '../constants/app_colors.dart';
+import '../screens/home/screens/home_screen.dart';
 
 class HomeNavigation extends StatefulWidget {
   const HomeNavigation({super.key});

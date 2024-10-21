@@ -4,15 +4,16 @@ import 'package:endol/common/text_field_custom.dart';
 import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/app_sizes.dart';
 import 'package:endol/screens/home/widgets/bottomsheet.dart';
+import 'package:endol/screens/home/widgets/home_amount_widget.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import '../../../constants/app_colors.dart';
+import '../../../../constants/app_colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../constants/strings.dart';
+import '../../../../constants/strings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -105,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       expand: false,
                       context: context,
                       backgroundColor: Colors.transparent,
-                      builder: (context) => ModalFit(),
+                      builder: (context) => const ModalFit(),
                     ),
                     child: Container(
                       width: 90,
@@ -123,27 +124,41 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // TextFieldCustom(
-            //   hint: 'Category',
-            //   controller: categoryController,
-            //   inputType: TextInputType.text,
-            // ),
-            // gapH16,
-            // TextFieldCustom(
-            //   hint: 'Amount',
-            //   controller: amountController,
-            //   inputType: TextInputType.number,
-            // ),
-            // gapH16,
-            // ButtonPrimary(
-            //   isLoading: isLoading,
-            //   width: 150,
-            //   active: true,
-            //   text: 'Submit',
-            //   function: () {
-            //     addDetails();
-            //   },
-            // )
+            gapH12,
+            const Padding(
+              padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  HomeAmountWidget(
+                    title: 'Total Spent',
+                    amount: '0.00',
+                  ),
+                  HomeAmountWidget(
+                    title: 'Budget Left',
+                    amount: '0.00',
+                  ),
+                ],
+              ),
+            ),
+            gapH12,
+            const Padding(
+              padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: TextWidget(
+                  text: 'Recent Transactions',
+                  color: AppColors.lightBrown,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ListView.builder(
+              itemCount: 2,
+              itemBuilder: (context, index) {
+                return const TextWidget(text: 'Hello');
+              },
+            )
           ],
         ),
       ),

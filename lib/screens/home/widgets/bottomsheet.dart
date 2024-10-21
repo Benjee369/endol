@@ -43,7 +43,6 @@ class _ModalFitState extends State<ModalFit> {
     'Eating Out'
   ];
 
-  // Function for adding e-details to database
   Future<void> addDetails() async {
     final User? user = auth.currentUser;
     final uid = user?.uid;
