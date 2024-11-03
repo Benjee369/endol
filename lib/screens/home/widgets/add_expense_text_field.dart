@@ -15,20 +15,29 @@ class AddExpenseTextField extends StatelessWidget {
   final String? prefixText;
   final TextCapitalization? textCapitalization;
   final Widget? prefixIcon;
+  final FocusNode? theFocusNode;
+  final bool? datePicker;
+  final Function? dateFunction;
+  final bool isReadOnly;
 
-  const AddExpenseTextField(
-      {super.key,
-      required this.hint,
-      this.toggleObscure,
-      this.dontShowText,
-      this.textCapitalization,
-      this.onChange,
-      this.autoCorrect,
-      this.prefixText,
-      required this.controller,
-      required this.inputType,
-      this.maxLength,
-      this.prefixIcon});
+  const AddExpenseTextField({
+    super.key,
+    required this.hint,
+    this.toggleObscure,
+    this.dontShowText,
+    this.textCapitalization,
+    this.onChange,
+    this.autoCorrect,
+    this.prefixText,
+    required this.controller,
+    required this.inputType,
+    this.maxLength,
+    this.prefixIcon,
+    this.theFocusNode,
+    this.dateFunction,
+    this.datePicker,
+    required this.isReadOnly,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +45,8 @@ class AddExpenseTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextField(
+          readOnly: isReadOnly,
+          focusNode: theFocusNode,
           controller: controller,
           maxLength: maxLength,
           autocorrect: autoCorrect ?? true,
@@ -64,7 +75,16 @@ class AddExpenseTextField extends StatelessWidget {
                       }
                     },
                   )
-                : const SizedBox(),
+                : datePicker == true
+                    ? IconButton(
+                        onPressed: () {
+                          if (dateFunction != null) {
+                            dateFunction!();
+                          }
+                        },
+                        icon: const Icon(Icons.calendar_month),
+                      )
+                    : const SizedBox(),
             prefix: prefixText != null
                 ? TextWidget(
                     text: "$prefixText ",

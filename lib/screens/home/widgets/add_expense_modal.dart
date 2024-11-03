@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:endol/common/text_widget.dart';
@@ -8,28 +7,30 @@ import 'package:endol/screens/home/widgets/add_expense_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-
 import '../../../common/button_primary.dart';
 import '../../../common/dialogs.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/strings.dart';
+import 'package:intl/intl.dart';
 
-class ModalFit extends StatefulWidget {
-  const ModalFit({super.key});
+class AddExpenseModal extends StatefulWidget {
+  const AddExpenseModal({super.key});
 
   @override
-  State<ModalFit> createState() => _ModalFitState();
+  State<AddExpenseModal> createState() => _AddExpenseModalState();
 }
 
-class _ModalFitState extends State<ModalFit> {
+class _AddExpenseModalState extends State<AddExpenseModal> {
   final amountController = TextEditingController();
-  final dateController = TextEditingController();
-  final categoryController = TextEditingController();
-  String? selectedValue;
+  String? categoryValue;
+  DateTime? selectedDate = DateTime.now();
+  late TextEditingController dateController;
+  bool isLoading = false;
 
+  //connection to database
   final storageRef = FirebaseStorage.instance.ref();
   CollectionReference data = FirebaseFirestore.instance.collection(
-    'expensedetails',
+    Strings.expenseDatabase,
   );
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -45,25 +46,59 @@ class _ModalFitState extends State<ModalFit> {
     'Eating Out'
   ];
 
-  Future<void> addDetails() async {
+  //Function that adds details to database
+  Future<void> _addDetails() async {
+    setState(() {
+      isLoading = true;
+    });
     final User? user = auth.currentUser;
     final uid = user?.uid;
 
     try {
-      if (categoryController.text.isEmpty || amountController.text.isEmpty) {
+      if (amountController.text.isEmpty) {
         Dialogs.dialogInform(context, 'Please enter details', () {
           Navigator.pop(context);
         }, Strings.ok);
       } else {
         data.add({
           'uid': uid,
-          'category': categoryController.text,
+          'category': categoryValue,
           'amount': amountController.text,
+          'expenseDate': selectedDate,
+          'currentDate': DateTime.now()
         });
       }
     } catch (e) {
       log('$e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
+  }
+
+  //Function that displays the date selector on the screen
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+
+    setState(() {
+      selectedDate = picked;
+      log('$selectedDate-----------------------');
+      dateController.text = DateFormat('yyyy/MM/dd').format(selectedDate!);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dateController = TextEditingController(
+      text: DateFormat('yyyy/MM/dd').format(selectedDate!),
+    );
   }
 
   @override
@@ -73,7 +108,6 @@ class _ModalFitState extends State<ModalFit> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
-          // This ensures the modal moves up when the keyboard is open.
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom + 0,
           ),
@@ -90,7 +124,7 @@ class _ModalFitState extends State<ModalFit> {
               children: <Widget>[
                 gapH12,
                 const TextWidget(
-                  text: 'Add Expense',
+                  text: Strings.addNewExpense,
                   fontWeight: FontWeight.bold,
                 ),
                 gapH16,
@@ -108,6 +142,7 @@ class _ModalFitState extends State<ModalFit> {
                       ),
                     ],
                   ),
+                  isReadOnly: false,
                 ),
                 gapH12,
                 DropdownButtonHideUnderline(
@@ -135,10 +170,10 @@ class _ModalFitState extends State<ModalFit> {
                           ),
                         )
                         .toList(),
-                    value: selectedValue,
+                    value: categoryValue,
                     onChanged: (String? value) {
                       setState(() {
-                        selectedValue = value;
+                        categoryValue = value;
                       });
                     },
                     buttonStyleData: ButtonStyleData(
@@ -154,11 +189,12 @@ class _ModalFitState extends State<ModalFit> {
                       height: 40,
                     ),
                     iconStyleData: const IconStyleData(
-                        icon: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: AppColors.textFieldHint,
-                      size: 30,
-                    )),
+                      icon: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: AppColors.textFieldHint,
+                        size: 30,
+                      ),
+                    ),
                   ),
                 ),
                 gapH12,
@@ -166,7 +202,17 @@ class _ModalFitState extends State<ModalFit> {
                   hint: 'Date',
                   controller: dateController,
                   inputType: TextInputType.text,
+                  datePicker: true,
+                  dateFunction: () {
+                    _selectDate(context);
+                  },
+                  isReadOnly: true,
                 ),
+                // CalendarDatePicker2(
+                //   config: CalendarDatePicker2Config(),
+                //   value: _dates,
+                //   onValueChanged: (dates) => _dates = dates,
+                // ),
                 gapH32,
                 ButtonPrimary(
                   active: true,
@@ -174,7 +220,9 @@ class _ModalFitState extends State<ModalFit> {
                   width: 180,
                   color: AppColors.thatBrown,
                   text: 'SAVE',
-                  function: () {},
+                  function: () {
+                    _addDetails();
+                  },
                 ),
                 gapH12,
               ],
