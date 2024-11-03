@@ -1,7 +1,6 @@
 import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/app_colors.dart';
 import 'package:endol/constants/app_sizes.dart';
-import 'package:endol/constants/fonts.dart';
 import 'package:flutter/material.dart';
 
 class AddExpenseTextField extends StatelessWidget {

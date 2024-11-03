@@ -1,6 +1,5 @@
-import 'package:endol/common/button_primary.dart';
+import 'dart:developer';
 import 'package:endol/common/dialogs.dart';
-import 'package:endol/common/text_field_custom.dart';
 import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/app_sizes.dart';
 import 'package:endol/screens/home/widgets/bottomsheet.dart';
@@ -12,7 +11,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../../constants/app_colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../../../constants/strings.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final storageRef = FirebaseStorage.instance.ref();
   CollectionReference data = FirebaseFirestore.instance.collection(
-    'expensedetails',
+    Strings.expenseDatabase,
   );
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -60,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     } catch (e) {
-      print('$e');
+      log('$e');
     }
   }
 
@@ -73,14 +71,18 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: AppColors.cream,
-          title: ExtendedImage.asset(
-            'assets/images/endol.png',
-            scale: 4,
+          title: const TextWidget(
+            text: 'Home',
+            color: AppColors.thatBrown,
+            fontWeight: FontWeight.bold,
+            size: 20,
           ),
         ),
         body: Column(
           children: [
-            ExtendedImage.asset('assets/images/home_background_image.png'),
+            ExtendedImage.asset(
+              'assets/images/home_background_image.png',
+            ),
             gapH12,
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
@@ -91,12 +93,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextWidget(
-                        text: 'Add new Expense',
+                        text: Strings.addNewExpense,
                         fontWeight: FontWeight.bold,
                         color: AppColors.thatBrown,
                       ),
                       TextWidget(
-                        text: 'Start tracking',
+                        text: Strings.startTracking,
                         color: AppColors.cream,
                       )
                     ],
@@ -131,11 +133,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   HomeAmountWidget(
-                    title: 'Total Spent',
+                    title: Strings.totalSpent,
                     amount: '0.00',
                   ),
                   HomeAmountWidget(
-                    title: 'Budget Left',
+                    title: Strings.budgetLeft,
                     amount: '0.00',
                   ),
                 ],
@@ -153,12 +155,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            ListView.builder(
-              itemCount: 2,
-              itemBuilder: (context, index) {
-                return const TextWidget(text: 'Hello');
-              },
-            )
           ],
         ),
       ),

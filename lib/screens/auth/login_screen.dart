@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'package:endol/app_navigation/home_navigation.dart';
+import 'package:endol/common/dialogs.dart';
 import 'package:endol/constants/app_sizes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,6 @@ import 'package:extended_image/extended_image.dart';
 
 import 'create_account_screen.dart';
 import 'services/firebase_auth_services.dart';
-import '../../../common/dialogs.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -36,6 +37,13 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController.dispose();
   }
 
+  //LOGIN DETAILS
+  //benjaminphiri369@gmail.com
+  //malawi123
+
+  //adrianmalika@gmail.com
+  //malawi1234
+
   void _signIn() async {
     setState(() {
       isLoading = true;
@@ -48,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
       User? user = await _auth.signInWithEmailAndPassword(email, password);
 
       if (user != null) {
-        print('Login Success');
+        FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+        log('Login Success');
         if (mounted) {
           setState(() {
             isLoading = false;
@@ -71,18 +80,15 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
     } catch (e) {
-      print('Failed to login: $e');
+      log('Failed to login: $e');
+      if (mounted) {
+        Dialogs.dialogInform(context, '$e', () {
+          Navigator.pop(context);
+        }, Strings.ok);
+      }
       setState(() {
         isLoading = false;
       });
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: TextWidget(text: '$e'),
-          ),
-        );
-      }
     }
   }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,12 +7,11 @@ import 'package:endol/constants/app_colors.dart';
 import 'package:endol/common/text_field_custom.dart';
 import 'package:endol/common/button_primary.dart';
 import '../../../app_navigation/navigation.dart';
+import '../../common/dialogs.dart';
 import 'login_screen.dart';
 import 'services/firebase_auth_services.dart';
 import '../../../constants/app_sizes.dart';
 import '../../../constants/strings.dart';
-
-//ignore_for_file:avoid_print
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -34,21 +35,29 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   }
 
   void _signUp() async {
-    String email = emailController.text.trim();
-    String password = passwordController.text.trim();
+    try {
+      String email = emailController.text.trim();
+      String password = passwordController.text.trim();
 
-    User? user = await _auth.signUpWithEmailAndPassword(email, password);
+      User? user = await _auth.signUpWithEmailAndPassword(email, password);
 
-    if (user != null) {
-      print('Success');
-      if (mounted) {
-        Navigation.navigateTo(
-          context,
-          const LoginScreen(),
-        );
+      if (user != null) {
+        if (mounted) {
+          Navigation.navigateTo(
+            context,
+            const LoginScreen(),
+          );
+        }
+      } else {
+        log('error');
       }
-    } else {
-      print('error');
+    } catch (e) {
+      log('$e');
+      if (mounted) {
+        Dialogs.dialogInform(context, '$e', () {
+          Navigator.pop(context);
+        }, Strings.ok);
+      }
     }
   }
 

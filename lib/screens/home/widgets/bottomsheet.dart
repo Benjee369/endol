@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:endol/common/text_widget.dart';
@@ -60,7 +62,7 @@ class _ModalFitState extends State<ModalFit> {
         });
       }
     } catch (e) {
-      print('$e');
+      log('$e');
     }
   }
 

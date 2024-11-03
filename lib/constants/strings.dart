@@ -16,4 +16,13 @@ class Strings {
   static const String fullName = "Full Name";
   static const String confirmPassword = "Confirm Password";
   static const String next = "Next";
+
+  //FIRESTORE
+  static const String expenseDatabase = "expensedetails";
+
+  //HOME SCREEN
+  static const String addNewExpense = "Add New Expense";
+  static const String startTracking = "Start Tracking";
+  static const String totalSpent = "Total Spent";
+  static const String budgetLeft = "Budget Left";
 }

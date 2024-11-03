@@ -1,6 +1,6 @@
 import 'package:endol/providers/current_index_provider.dart';
 import 'package:endol/screens/chart/chart_screen.dart';
-import 'package:endol/screens/profile/profile_screen.dart';
+import 'package:endol/screens/profile/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,7 +19,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
   final List<Widget> _pages = [
     const HomeScreen(),
     const ChartScreen(),
-    const ProfileScreen()
+    const SettingsScreen()
   ];
 
   void _onTap(int index, CurrentIndexProvider currentIndexProvider) {
@@ -59,7 +59,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
           ),
           DotNavigationBarItem(
             icon: const Icon(
-              FontAwesomeIcons.user,
+              FontAwesomeIcons.gear,
               size: 25,
             ),
           ),

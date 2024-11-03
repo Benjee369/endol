@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:endol/app_navigation/home_navigation.dart';
 import 'package:endol/constants/app_sizes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:endol/app_navigation/navigation.dart';
 import 'package:endol/constants/app_colors.dart';
@@ -15,19 +19,34 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    //after waiting for 2 seconds it takes you to the login screen
-    Future.delayed(
-      const Duration(milliseconds: 2000),
-      () {
-        if (mounted) {
-          Navigation.navigateAndReplace(
-            context,
-            const LoginScreen(),
-          );
-        }
-      },
-    );
+    _checkToken();
     super.initState();
+  }
+
+  Future _checkToken() async {
+    try {
+      FirebaseAuth.instance.authStateChanges().listen(
+        (User? user) {
+          if (user == null) {
+            if (mounted) {
+              Navigation.navigateAndReplace(
+                context,
+                const LoginScreen(),
+              );
+            }
+          } else {
+            if (mounted) {
+              Navigation.navigateAndReplace(
+                context,
+                const HomeNavigation(),
+              );
+            }
+          }
+        },
+      );
+    } catch (e) {
+      log('$e');
+    }
   }
 
   @override

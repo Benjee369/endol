@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:endol/common/text_widget.dart';
-import 'package:extended_image/extended_image.dart';
+import 'package:endol/constants/strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,9 +14,10 @@ class ChartScreen extends StatefulWidget {
 }
 
 class _ChartScreenState extends State<ChartScreen> {
-  final storageRef = FirebaseFirestore.instance.collection('expensedetails');
+  final storageRef =
+      FirebaseFirestore.instance.collection(Strings.expenseDatabase);
   final userData = FirebaseFirestore.instance
-      .collection('expensedetials')
+      .collection(Strings.expenseDatabase)
       .doc(FirebaseAuth.instance.currentUser?.uid);
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,11 @@ class _ChartScreenState extends State<ChartScreen> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: AppColors.cream,
-        title: ExtendedImage.asset(
-          'assets/images/endol.png',
-          scale: 4,
+        title: const TextWidget(
+          text: 'Charts',
+          color: AppColors.thatBrown,
+          fontWeight: FontWeight.bold,
+          size: 20,
         ),
       ),
       body: SafeArea(
