@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/app_sizes.dart';
-import 'package:endol/screens/home/widgets/add_expense_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,8 @@ import '../../../common/dialogs.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/strings.dart';
 import 'package:intl/intl.dart';
+
+import 'add_expense_text_field.dart';
 
 class AddExpenseModal extends StatefulWidget {
   const AddExpenseModal({super.key});
@@ -122,12 +123,16 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                gapH12,
-                const TextWidget(
-                  text: Strings.addNewExpense,
-                  fontWeight: FontWeight.bold,
+                gapH20,
+                const Align(
+                  alignment: Alignment.topLeft,
+                  child: TextWidget(
+                    text: Strings.addNewExpense,
+                    fontWeight: FontWeight.bold,
+                    size: 20,
+                  ),
                 ),
-                gapH16,
+                gapH20,
                 AddExpenseTextField(
                   hint: 'Amount',
                   controller: amountController,
@@ -217,7 +222,6 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
                 ButtonPrimary(
                   active: true,
                   height: 50,
-                  width: 180,
                   color: AppColors.thatBrown,
                   text: 'SAVE',
                   function: () {

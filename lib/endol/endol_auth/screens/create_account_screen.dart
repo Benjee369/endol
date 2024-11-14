@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:endol/constants/app_colors.dart';
 import 'package:endol/common/text_field_custom.dart';
 import 'package:endol/common/button_primary.dart';
-import '../../../app_navigation/navigation.dart';
-import '../../common/dialogs.dart';
+import '../../../../app_navigation/navigation.dart';
+import '../../../common/dialogs.dart';
 import 'login_screen.dart';
-import 'services/firebase_auth_services.dart';
-import '../../../constants/app_sizes.dart';
-import '../../../constants/strings.dart';
+import '../services/firebase_auth_services.dart';
+import '../../../../constants/app_sizes.dart';
+import '../../../../constants/strings.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});

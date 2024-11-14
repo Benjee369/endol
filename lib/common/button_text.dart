@@ -9,13 +9,15 @@ class ButtonText extends StatelessWidget {
   final IconData? icon;
   final Color? textColor;
   final double? textSize;
-  const ButtonText(
-      {super.key,
-      required this.text,
-      required this.onTap,
-      this.textColor,
-      this.textSize,
-      this.icon});
+
+  const ButtonText({
+    super.key,
+    required this.text,
+    required this.onTap,
+    this.textColor,
+    this.textSize,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {

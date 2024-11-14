@@ -1,12 +1,12 @@
 import 'package:endol/providers/current_index_provider.dart';
-import 'package:endol/screens/chart/chart_screen.dart';
-import 'package:endol/screens/profile/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../constants/app_colors.dart';
-import '../screens/home/screens/home_screen.dart';
+import '../endol/endol_chart/chart_screen.dart';
+import '../endol/endol_home/screens/home_screen.dart';
+import '../endol/endol_profile/settings_screen.dart';
 
 class HomeNavigation extends StatefulWidget {
   const HomeNavigation({super.key});
@@ -16,12 +16,6 @@ class HomeNavigation extends StatefulWidget {
 }
 
 class _HomeNavigationState extends State<HomeNavigation> {
-  final List<Widget> _pages = [
-    const HomeScreen(),
-    const ChartScreen(),
-    const SettingsScreen()
-  ];
-
   void _onTap(int index, CurrentIndexProvider currentIndexProvider) {
     currentIndexProvider.setCurrentIndex(index);
   }
@@ -29,6 +23,16 @@ class _HomeNavigationState extends State<HomeNavigation> {
   @override
   Widget build(BuildContext context) {
     final currentIndexProvider = Provider.of<CurrentIndexProvider>(context);
+    final List<Widget> pages = [
+      const HomeScreen(),
+      currentIndexProvider.currentIndex == 1
+          ? const ChartScreen()
+          : const SizedBox.shrink(),
+      currentIndexProvider.currentIndex == 2
+          ? const SettingsScreen()
+          : const SizedBox.shrink()
+    ];
+
     return Scaffold(
       bottomNavigationBar: DotNavigationBar(
         currentIndex: currentIndexProvider.currentIndex,
@@ -67,7 +71,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
       ),
       body: IndexedStack(
         index: currentIndexProvider.currentIndex,
-        children: _pages,
+        children: pages,
       ),
     );
   }

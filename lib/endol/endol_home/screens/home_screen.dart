@@ -2,8 +2,6 @@ import 'dart:developer';
 import 'package:endol/common/dialogs.dart';
 import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/app_sizes.dart';
-import 'package:endol/screens/home/widgets/add_expense_modal.dart';
-import 'package:endol/screens/home/widgets/home_amount_widget.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +10,8 @@ import '../../../../constants/app_colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../constants/strings.dart';
+import '../widgets/add_expense_modal.dart';
+import '../widgets/home_amount_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -94,12 +94,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       TextWidget(
                         text: Strings.addNewExpense,
-                        fontWeight: FontWeight.bold,
                         color: AppColors.thatBrown,
+                        fontWeight: FontWeight.bold,
+                        size: 19,
                       ),
                       TextWidget(
                         text: Strings.startTracking,
-                        color: AppColors.cream,
+                        color: AppColors.lightBrown,
                       )
                     ],
                   ),
@@ -150,8 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 alignment: Alignment.topLeft,
                 child: TextWidget(
                   text: 'Recent Transactions',
-                  color: AppColors.lightBrown,
+                  color: AppColors.thatBrown,
                   fontWeight: FontWeight.bold,
+                  size: 19,
                 ),
               ),
             ),

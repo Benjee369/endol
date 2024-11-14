@@ -44,8 +44,14 @@ class ButtonPrimary extends StatelessWidget {
           ),
         ),
         child: isLoading // Display a CircularProgressIndicator when loading
-            ? const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.thatBrown),
+            ? const SizedBox(
+                height: 21,
+                width: 21,
+                child: CircularProgressIndicator(
+                  strokeCap: StrokeCap.round,
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(AppColors.thatBrown),
+                ),
               )
             : TextWidget(
                 text: text,

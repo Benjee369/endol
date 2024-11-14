@@ -13,7 +13,7 @@ import 'package:endol/common/button_primary.dart';
 import 'package:extended_image/extended_image.dart';
 
 import 'create_account_screen.dart';
-import 'services/firebase_auth_services.dart';
+import '../services/firebase_auth_services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -59,18 +59,12 @@ class _LoginScreenState extends State<LoginScreen> {
         FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
         log('Login Success');
         if (mounted) {
-          setState(() {
-            isLoading = false;
-          });
           Navigation.navigateAndReplace(
             context,
             const HomeNavigation(),
           );
         }
       } else {
-        setState(() {
-          isLoading = false;
-        });
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -86,6 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.pop(context);
         }, Strings.ok);
       }
+    } finally {
       setState(() {
         isLoading = false;
       });
@@ -113,10 +108,6 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: EdgeInsets.fromLTRB(20, screenHeight * 0.1, 20, 0),
               child: Column(
                 children: [
-                  ExtendedImage.asset(
-                    'assets/images/logo.png',
-                    scale: 6,
-                  ),
                   const SizedBox(height: 100),
                   ExtendedImage.asset('assets/images/endol.png'),
                   gapH16,

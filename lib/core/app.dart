@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/splash/splash_screen.dart';
+import '../endol/endol_splash/splash_screen.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
