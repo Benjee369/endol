@@ -8,6 +8,7 @@ import 'package:endol/common/text_field_custom.dart';
 import 'package:endol/common/button_primary.dart';
 import '../../../../app_navigation/navigation.dart';
 import '../../../common/dialogs.dart';
+import '../../../constants/app_images.dart';
 import 'login_screen.dart';
 import '../services/firebase_auth_services.dart';
 import '../../../../constants/app_sizes.dart';
@@ -77,14 +78,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               children: [
                 // Logo
                 ExtendedImage.asset(
-                  'assets/images/logo.png',
+                  AppImages.logo,
                   scale: 6,
                 ),
                 const SizedBox(height: 100),
                 // Title and slogan
-                ExtendedImage.asset('assets/images/endol.png'),
+                ExtendedImage.asset(AppImages.endolSign),
                 gapH16,
-                ExtendedImage.asset('assets/images/slogan.png'),
+                ExtendedImage.asset(AppImages.slogan),
                 gapH48,
                 // FullName input
                 TextFieldCustom(

@@ -61,10 +61,11 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
           Navigator.pop(context);
         }, Strings.ok);
       } else {
+        double value = double.parse(amountController.text);
         data.add({
           'uid': uid,
           'category': categoryValue,
-          'amount': amountController.text,
+          'amount': value,
           'expenseDate': selectedDate,
           'currentDate': DateTime.now()
         });
@@ -75,6 +76,7 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
       setState(() {
         isLoading = false;
       });
+      Navigator.pop(context);
     }
   }
 
@@ -220,6 +222,7 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
                 // ),
                 gapH32,
                 ButtonPrimary(
+                  isLoading: isLoading,
                   active: true,
                   height: 50,
                   color: AppColors.thatBrown,

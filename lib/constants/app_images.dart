@@ -1,6 +1,10 @@
 class AppImages {
+  //logo
   static const String logo = "assets/images/logo.png";
 
-  //get started screen
-  static const String plate = "assets/images/plate.png";
+  //endol sign
+  static const String endolSign = "assets/images/endol.png";
+
+  //slogan
+  static const String slogan = "assets/images/slogan.png";
 }

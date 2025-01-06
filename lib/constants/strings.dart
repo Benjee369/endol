@@ -17,8 +17,9 @@ class Strings {
   static const String confirmPassword = "Confirm Password";
   static const String next = "Next";
 
-  //FIRESTORE
+  //FIRE STORE
   static const String expenseDatabase = "expensedetails";
+  static const String budgetDatabase = "budget";
 
   //HOME SCREEN
   static const String addNewExpense = "Add New Expense";

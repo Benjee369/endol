@@ -39,7 +39,11 @@ class SettingsTabWidget extends StatelessWidget {
               ),
             ),
             gapW16,
-            TextWidget(text: tabText),
+            TextWidget(
+              text: tabText,
+              fontWeight: FontWeight.bold,
+              size: 17,
+            ),
             const Spacer(),
             const Icon(Icons.chevron_right_outlined),
           ],

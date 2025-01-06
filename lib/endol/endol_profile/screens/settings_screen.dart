@@ -1,12 +1,15 @@
 import 'package:endol/app_navigation/navigation.dart';
+import 'package:endol/common/custom_app_bar.dart';
 import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/app_colors.dart';
 import 'package:endol/constants/app_sizes.dart';
+import 'package:endol/endol/endol_profile/screens/budget_management_screen.dart';
 import 'package:endol/endol/endol_profile/widget/settings_tab_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../endol_auth/screens/login_screen.dart';
+import '../../endol_auth/screens/login_screen.dart';
+import '../widget/settings_title_widget.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -50,39 +53,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.cream,
-        centerTitle: true,
-        title: const TextWidget(
-          text: 'Settings',
-          color: AppColors.thatBrown,
-          fontWeight: FontWeight.bold,
-          size: 20,
-        ),
-      ),
+      appBar: const CustomAppBar(title: 'Settings'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: SafeArea(
           child: Column(
             children: [
               gapH24,
-              const CircleAvatar(
-                radius: 51,
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundColor: AppColors.lightBrown,
-                ),
+              const Row(
+                children: [
+                  CircleAvatar(
+                    radius: 60.7,
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundColor: AppColors.lightBrown,
+                    ),
+                  ),
+                  gapW24,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextWidget(
+                        text: 'John Doe',
+                        size: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      TextWidget(text: 'JohnD@gmail.com'),
+                    ],
+                  ),
+                ],
               ),
-              const TextWidget(text: 'John Doe'),
               gapH24,
-              const Align(
-                alignment: Alignment.topLeft,
-                child: TextWidget(
-                  text: 'General',
-                  size: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              const SettingsTitleWidget(text: 'General'),
               gapH16,
               SettingsTabWidget(
                 tabIcon: Icons.person_off,
@@ -91,19 +93,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               gapH16,
               SettingsTabWidget(
-                tabIcon: Icons.person_off,
-                tabText: 'Account',
-                function: () {},
+                tabIcon: Icons.money,
+                tabText: 'Budget Management',
+                function: () {
+                  Navigation.navigateTo(
+                    context,
+                    const BudgetManagementScreen(),
+                  );
+                },
               ),
               gapH32,
-              const Align(
-                alignment: Alignment.topLeft,
-                child: TextWidget(
-                  text: 'General',
-                  size: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              const SettingsTitleWidget(text: 'General'),
               gapH16,
               SettingsTabWidget(
                 tabIcon: Icons.logout,

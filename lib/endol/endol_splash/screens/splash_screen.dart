@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:endol/app_navigation/home_navigation.dart';
 import 'package:endol/constants/app_sizes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:endol/app_navigation/navigation.dart';
 import 'package:endol/constants/app_colors.dart';
 import 'package:extended_image/extended_image.dart';
-
-import '../endol_auth/screens/login_screen.dart';
+import '../../endol_auth/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
