@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:endol/common/button_primary.dart';
 import 'package:endol/common/custom_app_bar.dart';
 import 'package:endol/common/shimmer_loader.dart';
 import 'package:endol/common/text_widget.dart';
@@ -75,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Provider.of<BudgetProvider>(context, listen: false);
       final amount = budgetProvider.budgetAmount;
 
+      log('${user?.email}');
       if (amount != null) {
         budgetAmount = amount;
       } else {
@@ -222,17 +222,25 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: isLoading ? 5 : expenseData.length,
-                  itemBuilder: (context, index) {
-                    final expenses = expenseData[index];
-
-                    return isLoading
-                        ? const ShimmerLoading(
+                child: isLoading
+                    ? ListView.separated(
+                        itemCount: 5,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return gapH8;
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          return const ShimmerLoading(
                             height: 52,
-                          )
-                        : Container(
+                          );
+                        },
+                      )
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: expenseData.length,
+                        itemBuilder: (context, index) {
+                          final expenses = expenseData[index];
+
+                          return Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8,
                               vertical: 8,
@@ -267,11 +275,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return gapH8;
-                  },
-                ),
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return gapH8;
+                        },
+                      ),
               )
             ],
           ),

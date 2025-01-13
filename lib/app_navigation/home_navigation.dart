@@ -24,7 +24,9 @@ class _HomeNavigationState extends State<HomeNavigation> {
   Widget build(BuildContext context) {
     final currentIndexProvider = Provider.of<CurrentIndexProvider>(context);
     final List<Widget> pages = [
-      const HomeScreen(),
+      currentIndexProvider.currentIndex == 0
+          ? const HomeScreen()
+          : const SizedBox.shrink(),
       currentIndexProvider.currentIndex == 1
           ? const ChartScreen()
           : const SizedBox.shrink(),

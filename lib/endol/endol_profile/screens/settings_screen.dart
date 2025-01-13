@@ -20,6 +20,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool isLoading = false;
+  final User? user = FirebaseAuth.instance.currentUser;
 
   Future<void> _signOut() async {
     if (mounted) {
@@ -60,13 +61,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             children: [
               gapH24,
-              const Row(
+              Row(
                 children: [
                   CircleAvatar(
                     radius: 60.7,
                     child: CircleAvatar(
                       radius: 60,
                       backgroundColor: AppColors.lightBrown,
+                      child: TextWidget(
+                        text:
+                            '${user!.email?[0].toUpperCase()}${user!.email?[1].toUpperCase()}' ??
+                                '',
+                        color: AppColors.pureWhite,
+                        size: 35,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   gapW24,
@@ -74,11 +83,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextWidget(
-                        text: 'John Doe',
+                        text: user!.email?[0] ?? 'Not authenticated',
                         size: 24,
                         fontWeight: FontWeight.bold,
                       ),
-                      TextWidget(text: 'JohnD@gmail.com'),
+                      TextWidget(text: user?.email ?? 'Not authenticated'),
                     ],
                   ),
                 ],
