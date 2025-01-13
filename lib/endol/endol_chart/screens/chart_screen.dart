@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:endol/common/button_primary.dart';
 import 'package:endol/common/dialogs.dart';
 import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/strings.dart';
@@ -8,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
-import 'package:intl/intl.dart';
 
 import '../../../constants/app_colors.dart';
 
@@ -186,21 +184,22 @@ class _ChartScreenState extends State<ChartScreen> {
       AppColors.thatBrown,
       Colors.green,
     ];
-    final double total = categoryTotals.values.reduce((a, b) => a + b);
+    // final double total = categoryTotals.values.reduce((a, b) => a + b);
 
     return data.entries.map((entry) {
       final int index = data.keys.toList().indexOf(entry.key);
-      final double percentage = (entry.value / total) * 100;
+      // final double percentage = (entry.value / total) * 100;
 
       return PieChartSectionData(
         value: entry.value,
         color: colors[index % colors.length],
-        title: '${entry.key}',
+        title: entry.key,
         radius: 50,
         titleStyle: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: AppColors.pureWhite),
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: AppColors.pureWhite,
+        ),
       );
     }).toList();
   }

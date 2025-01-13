@@ -70,8 +70,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       backgroundColor: AppColors.lightBrown,
                       child: TextWidget(
                         text:
-                            '${user!.email?[0].toUpperCase()}${user!.email?[1].toUpperCase()}' ??
-                                '',
+                            '${user!.email?[0].toUpperCase()}${user!.email?[1].toUpperCase()}',
                         color: AppColors.pureWhite,
                         size: 35,
                         fontWeight: FontWeight.bold,
