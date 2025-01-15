@@ -104,32 +104,37 @@ class _BudgetManagementScreenState extends State<BudgetManagementScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: const CustomAppBar(title: 'Budget'),
-      body: Column(
-        children: [
-          gapH48,
-          budgetIsLoading
-              ? const CircularProgressIndicator()
-              : TextWidget(
-                  text: 'K $budgetAmount',
-                  fontWeight: FontWeight.bold,
-                  size: 30,
+      body: Center(
+        child: Column(
+          children: [
+            gapH48,
+            budgetIsLoading
+                ? const CircularProgressIndicator()
+                : TextWidget(
+                    text: budgetAmount == null ? 'K 0' : 'K $budgetAmount',
+                    fontWeight: FontWeight.bold,
+                    size: 30,
+                  ),
+            gapH24,
+            ButtonPrimary(
+              width: size.width * 0.6,
+              text: 'Edit Budget',
+              function: () => showMaterialModalBottomSheet(
+                expand: false,
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (context) => EditBudgetBottomSheet(
+                  getBudgetTrigger: getBudgetAfterUpdate(),
                 ),
-          gapH24,
-          ButtonPrimary(
-            text: 'Edit Budget',
-            function: () => showMaterialModalBottomSheet(
-              expand: false,
-              context: context,
-              backgroundColor: Colors.transparent,
-              builder: (context) => EditBudgetBottomSheet(
-                getBudgetTrigger: getBudgetAfterUpdate(),
               ),
-            ),
-            active: true,
-          )
-        ],
+              active: true,
+            )
+          ],
+        ),
       ),
     );
   }

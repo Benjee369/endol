@@ -1,12 +1,11 @@
 import 'dart:developer';
 import 'package:endol/common/custom_app_bar.dart';
-import 'package:endol/common/shimmer_loader.dart';
+import 'package:endol/common/dialogs.dart';
 import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/app_sizes.dart';
-import 'package:endol/endol/endol_home/function/expense_icon.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import '../../../../constants/app_colors.dart';
@@ -15,6 +14,7 @@ import '../../../../constants/strings.dart';
 import '../../../providers/budget_provider.dart';
 import '../widgets/add_expense_modal.dart';
 import '../widgets/home_amount_widget.dart';
+import '../widgets/recent_transaction_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -106,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       QuerySnapshot querySnapshot = await data
           .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+          .orderBy('currentDate', descending: true)
           .get();
 
       for (var doc in querySnapshot.docs) {
@@ -134,16 +135,37 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                width: double.infinity,
-                height: 200,
-                child: ExtendedImage.asset(
-                  'assets/images/home_background_image.png',
-                  scale: 2,
-                  fit: BoxFit.fitWidth,
+              // SizedBox(
+              //   width: double.infinity,
+              //   height: 200,
+              //   child: ExtendedImage.asset(
+              //     'assets/images/home_background_image.png',
+              //     scale: 2,
+              //     fit: BoxFit.fitWidth,
+              //   ),
+              // ),
+              gapH12,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    HomeAmountWidget(
+                      title: Strings.totalSpent,
+                      amount: '$totalSpent',
+                      isLoading: isLoading,
+                    ),
+                    gapW12,
+                    HomeAmountWidget(
+                      title: Strings.budgetLeft,
+                      amount: '$budgetLeft',
+                      isLoading: isLoading,
+                      textColor: budgetLeft < 0 ? Colors.red : Colors.green,
+                    ),
+                  ],
                 ),
               ),
-              gapH12,
+              gapH24,
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: Row(
@@ -187,27 +209,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              gapH12,
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    HomeAmountWidget(
-                      title: Strings.totalSpent,
-                      amount: '$totalSpent',
-                      isLoading: isLoading,
-                    ),
-                    HomeAmountWidget(
-                      title: Strings.budgetLeft,
-                      amount: '$budgetLeft',
-                      isLoading: isLoading,
-                      textColor: budgetLeft < 0 ? Colors.red : Colors.green,
-                    ),
-                  ],
-                ),
-              ),
-              gapH12,
+
+              gapH24,
               const Padding(
                 padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: Align(
@@ -220,65 +223,49 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
+              gapH12,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: isLoading
-                    ? ListView.separated(
-                        itemCount: 5,
-                        separatorBuilder: (BuildContext context, int index) {
-                          return gapH8;
-                        },
-                        itemBuilder: (BuildContext context, int index) {
-                          return const ShimmerLoading(
-                            height: 52,
-                          );
-                        },
-                      )
-                    : ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: expenseData.length,
-                        itemBuilder: (context, index) {
-                          final expenses = expenseData[index];
+                    ? Dialogs.loadingInScreen()
+                    : RefreshIndicator(
+                        onRefresh: initialise,
+                        color: AppColors.thatBrown,
+                        backgroundColor: AppColors.pureWhite,
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          itemCount:
+                              expenseData.length < 5 ? expenseData.length : 5,
+                          itemBuilder: (context, index) {
+                            final expenses = expenseData[index];
 
-                          return Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.cream,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(6),
-                                  decoration: const ShapeDecoration(
-                                    color: AppColors.pureWhite,
-                                    shape: CircleBorder(),
-                                  ),
-                                  child: Icon(
-                                    expenseIcon(expenses['category']),
-                                    color: AppColors.thatBrown.withOpacity(0.9),
-                                  ),
-                                ),
-                                gapW12,
-                                TextWidget(
-                                  text: 'K${expenses['amount']}',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                const Spacer(),
-                                TextWidget(
-                                  text: expenses['category'],
-                                  color: AppColors.textFieldHint,
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return gapH8;
-                        },
+                            DateTime dateTime =
+                                expenses['expenseDate'].toDate();
+
+                            DateTime now = DateTime.now();
+                            DateTime today =
+                                DateTime(now.year, now.month, now.day);
+
+                            DateTime orderDateMidnight = DateTime(
+                                dateTime.year, dateTime.month, dateTime.day);
+                            String formattedDate;
+
+                            if (orderDateMidnight == today) {
+                              formattedDate =
+                                  "Today at ${DateFormat('hh:mm a').format(dateTime)}";
+                            } else {
+                              formattedDate =
+                                  DateFormat('MMM dd, yyyy').format(dateTime);
+                            }
+                            return RecentTransactionWidget(
+                              expenses: expenses,
+                              formattedDate: formattedDate,
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return gapH12;
+                          },
+                        ),
                       ),
               )
             ],

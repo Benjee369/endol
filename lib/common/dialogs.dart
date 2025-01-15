@@ -149,6 +149,7 @@ class Dialogs {
         ? const Center(
             child: CircularProgressIndicator(
               color: AppColors.thatBrown,
+              strokeCap: StrokeCap.round,
             ),
           )
         : const Center(

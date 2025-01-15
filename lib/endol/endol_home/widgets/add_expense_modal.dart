@@ -36,15 +36,39 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   // List of items in the category selector
-  final List<String> category = [
-    'Food',
-    'Rent',
-    'Transport',
-    'Misc',
-    'School Fees',
-    'Subscriptions',
-    'Luxury',
-    'Eating Out'
+  final List<Map> categories = [
+    {
+      'name': 'Food',
+      'icon': Icons.fastfood_rounded,
+    },
+    {
+      'name': 'Rent',
+      'icon': Icons.home_rounded,
+    },
+    {
+      'name': 'Transport',
+      'icon': Icons.directions_bus_rounded,
+    },
+    {
+      'name': 'Misc',
+      'icon': Icons.miscellaneous_services_rounded,
+    },
+    {
+      'name': 'School Fees',
+      'icon': Icons.school_rounded,
+    },
+    {
+      'name': 'Subscriptions',
+      'icon': Icons.subscriptions_rounded,
+    },
+    {
+      'name': 'Luxury',
+      'icon': Icons.shopping_bag_rounded,
+    },
+    {
+      'name': 'Eating Out',
+      'icon': Icons.restaurant_rounded,
+    },
   ];
 
   //Function that adds details to database
@@ -164,15 +188,25 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
                       size: 14,
                       color: AppColors.textFieldHint,
                     ),
-                    items: category
+                    items: categories
                         .map(
-                          (String item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
+                          (item) => DropdownMenuItem<String>(
+                            value: item['name'],
+                            child: Row(
+                              children: [
+                                Icon(
+                                  item['icon'],
+                                  color: AppColors.thatBrown,
+                                  size: 20,
+                                ),
+                                gapW8,
+                                Text(
+                                  item['name'],
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         )

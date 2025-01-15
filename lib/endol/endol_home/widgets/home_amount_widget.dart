@@ -28,34 +28,34 @@ class HomeAmountWidget extends StatelessWidget {
             width: size.width * 0.45,
             borderRadius: 15,
           )
-        : Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            color: AppColors.cream,
-            elevation: 0,
-            surfaceTintColor: AppColors.cream,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.05,
-                vertical: size.height * 0.01,
+        : Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(13),
+                color: AppColors.cream,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextWidget(
-                    text: '$title',
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textFieldHint,
-                    size: 14,
-                  ),
-                  TextWidget(
-                    text: 'K $amount',
-                    fontWeight: FontWeight.bold,
-                    size: 22,
-                    color: textColor,
-                  )
-                ],
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: size.width * 0.05,
+                  vertical: size.height * 0.02,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextWidget(
+                      text: '$title',
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textFieldHint,
+                      size: 14,
+                    ),
+                    TextWidget(
+                      text: 'K $amount',
+                      fontWeight: FontWeight.bold,
+                      size: 25,
+                      color: textColor,
+                    )
+                  ],
+                ),
               ),
             ),
           );

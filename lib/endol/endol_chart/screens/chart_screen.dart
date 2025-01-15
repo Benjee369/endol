@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:endol/common/custom_app_bar.dart';
 import 'package:endol/common/dialogs.dart';
-import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -109,16 +109,7 @@ class _ChartScreenState extends State<ChartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.cream,
-        title: const TextWidget(
-          text: 'Charts',
-          color: AppColors.thatBrown,
-          fontWeight: FontWeight.bold,
-          size: 20,
-        ),
-      ),
+      appBar: CustomAppBar(title: 'Charts'),
       body:
           // ButtonPrimary(
           //     active: true,
