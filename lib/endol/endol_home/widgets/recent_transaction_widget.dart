@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../../../common/text_widget.dart';
@@ -11,10 +13,12 @@ class RecentTransactionWidget extends StatelessWidget {
     super.key,
     required this.expenses,
     required this.formattedDate,
+    required this.deleteFunction,
   });
 
   final Map<String, dynamic> expenses;
   final String formattedDate;
+  final VoidCallback deleteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,16 @@ class RecentTransactionWidget extends StatelessWidget {
                   ],
                 ),
                 CustomPopupMenu(
-                  onSelected: (value) {},
+                  onSelected: (value) {
+                    switch (value) {
+                      case 0:
+                        log('Update pressed');
+                        break;
+                      case 1:
+                        deleteFunction.call();
+                        break;
+                    }
+                  },
                   items: [
                     PopupMenuItemData(
                       value: 0,

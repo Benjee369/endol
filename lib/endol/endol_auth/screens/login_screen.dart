@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
       User? user = await _auth.signInWithEmailAndPassword(email, password);
 
       if (user != null) {
-        FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
+        // FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
         log('Login Success');
         if (mounted) {
           Navigation.navigateAndReplace(

@@ -53,6 +53,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: const CustomAppBar(title: 'Settings'),
       body: Padding(
@@ -86,7 +88,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         size: 24,
                         fontWeight: FontWeight.bold,
                       ),
-                      TextWidget(text: user?.email ?? 'Not authenticated'),
+                      SizedBox(
+                        width: size.width * 0.4,
+                        child: TextWidget(
+                          text: user?.email ?? 'Not authenticated',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                     ],
                   ),
                 ],

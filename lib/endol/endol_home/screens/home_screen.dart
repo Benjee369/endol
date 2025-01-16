@@ -49,7 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
     initialise();
   }
 
+  //Function that is used to call all the functions to initialise the data
   Future initialise() async {
+    log('Initialize function triggered');
+
     if (mounted) {
       setState(() => isLoading = true);
     }
@@ -68,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  //function to get the budget
   Future<void> getBudget() async {
     try {
       final budgetProvider =
@@ -95,11 +99,13 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  //Function to calculate the remaining budget
   Future getBudgetLeft() async {
     budgetLeft = (budgetAmount ?? 0.0) - totalSpent;
     log('this is the budget left: $budgetLeft');
   }
 
+  //Function to get all the documents and calculate the total spent
   Future<double> getTotalSpent() async {
     totalSpent = 0.0;
 
@@ -114,9 +120,14 @@ class _HomeScreenState extends State<HomeScreen> {
         totalSpent += value;
       }
       if (querySnapshot.docs.isNotEmpty) {
-        expenseData = querySnapshot.docs
-            .map((doc) => doc.data() as Map<String, dynamic>)
-            .toList();
+        expenseData = querySnapshot.docs.map((doc) {
+          Map<String, dynamic> expense = doc.data() as Map<String, dynamic>;
+          expense['id'] = doc.id;
+          return expense;
+        }).toList();
+        // log('${expenseData[0].}');
+      } else {
+        expenseData = [];
       }
     } catch (e) {
       log('$e');
@@ -125,25 +136,35 @@ class _HomeScreenState extends State<HomeScreen> {
     return totalSpent;
   }
 
+  //Function to delete a transaction
+  Future deleteTransaction(String id) async {
+    log('Delete function triggered');
+
+    await data.doc(id).delete().then(
+          (_) => log('Document $id deleted'),
+        );
+    initialise();
+    if (mounted) {
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         backgroundColor: AppColors.pureWhite,
-        appBar: const CustomAppBar(title: 'Home'),
+        appBar: CustomAppBar(
+          title: 'Home',
+          isRefreshOn: true,
+          refresh: () {
+            initialise();
+          },
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              // SizedBox(
-              //   width: double.infinity,
-              //   height: 200,
-              //   child: ExtendedImage.asset(
-              //     'assets/images/home_background_image.png',
-              //     scale: 2,
-              //     fit: BoxFit.fitWidth,
-              //   ),
-              // ),
               gapH12,
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
@@ -191,7 +212,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         expand: false,
                         context: context,
                         backgroundColor: Colors.transparent,
-                        builder: (context) => const AddExpenseModal(),
+                        builder: (context) => AddExpenseModal(
+                          initializeFunction: () {
+                            initialise();
+                          },
+                        ),
                       ),
                       child: Container(
                         width: 90,
@@ -209,7 +234,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-
               gapH24,
               const Padding(
                 padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
@@ -228,45 +252,55 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: isLoading
                     ? Dialogs.loadingInScreen()
-                    : RefreshIndicator(
-                        onRefresh: initialise,
-                        color: AppColors.thatBrown,
-                        backgroundColor: AppColors.pureWhite,
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          itemCount:
-                              expenseData.length < 5 ? expenseData.length : 5,
-                          itemBuilder: (context, index) {
-                            final expenses = expenseData[index];
+                    : expenseData.isEmpty
+                        ? TextWidget(text: 'No Expenses')
+                        : RefreshIndicator(
+                            onRefresh: initialise,
+                            color: AppColors.thatBrown,
+                            backgroundColor: AppColors.pureWhite,
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: expenseData.length < 5
+                                  ? expenseData.length
+                                  : 5,
+                              itemBuilder: (context, index) {
+                                final expenses = expenseData[index];
 
-                            DateTime dateTime =
-                                expenses['expenseDate'].toDate();
+                                log('${expenses['id']}');
+                                DateTime dateTime =
+                                    expenses['expenseDate'].toDate();
 
-                            DateTime now = DateTime.now();
-                            DateTime today =
-                                DateTime(now.year, now.month, now.day);
+                                DateTime now = DateTime.now();
+                                DateTime today =
+                                    DateTime(now.year, now.month, now.day);
 
-                            DateTime orderDateMidnight = DateTime(
-                                dateTime.year, dateTime.month, dateTime.day);
-                            String formattedDate;
+                                DateTime orderDateMidnight = DateTime(
+                                    dateTime.year,
+                                    dateTime.month,
+                                    dateTime.day);
+                                String formattedDate;
 
-                            if (orderDateMidnight == today) {
-                              formattedDate =
-                                  "Today at ${DateFormat('hh:mm a').format(dateTime)}";
-                            } else {
-                              formattedDate =
-                                  DateFormat('MMM dd, yyyy').format(dateTime);
-                            }
-                            return RecentTransactionWidget(
-                              expenses: expenses,
-                              formattedDate: formattedDate,
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return gapH12;
-                          },
-                        ),
-                      ),
+                                if (orderDateMidnight == today) {
+                                  formattedDate =
+                                      "Today at ${DateFormat('hh:mm a').format(dateTime)}";
+                                } else {
+                                  formattedDate = DateFormat('MMM dd, yyyy')
+                                      .format(dateTime);
+                                }
+                                return RecentTransactionWidget(
+                                  expenses: expenses,
+                                  formattedDate: formattedDate,
+                                  deleteFunction: () {
+                                    deleteTransaction(expenses['id']);
+                                  },
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return gapH12;
+                              },
+                            ),
+                          ),
               )
             ],
           ),

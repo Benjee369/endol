@@ -15,7 +15,12 @@ import 'package:intl/intl.dart';
 import 'add_expense_text_field.dart';
 
 class AddExpenseModal extends StatefulWidget {
-  const AddExpenseModal({super.key});
+  final VoidCallback initializeFunction;
+
+  const AddExpenseModal({
+    super.key,
+    required this.initializeFunction,
+  });
 
   @override
   State<AddExpenseModal> createState() => _AddExpenseModalState();
@@ -101,6 +106,7 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
         isLoading = false;
       });
       Navigator.pop(context);
+      widget.initializeFunction.call();
     }
   }
 

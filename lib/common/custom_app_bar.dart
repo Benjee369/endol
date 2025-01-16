@@ -4,10 +4,14 @@ import '../constants/app_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final VoidCallback? refresh;
+  final bool? isRefreshOn;
 
   const CustomAppBar({
     super.key,
     required this.title,
+    this.refresh,
+    this.isRefreshOn,
   });
 
   @override
@@ -21,6 +25,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         fontWeight: FontWeight.bold,
         size: 23,
       ),
+      actions: [
+        isRefreshOn == true
+            ? IconButton(
+                onPressed: () {
+                  refresh?.call();
+                },
+                icon: Icon(
+                  Icons.refresh,
+                ),
+              )
+            : SizedBox(),
+      ],
     );
   }
 
