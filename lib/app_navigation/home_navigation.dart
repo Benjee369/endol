@@ -4,9 +4,9 @@ import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../constants/app_colors.dart';
-import '../endol/endol_chart/screens/chart_screen.dart';
 import '../endol/endol_home/screens/home_screen.dart';
 import '../endol/endol_profile/screens/settings_screen.dart';
+import '../endol/endol_statistics/screens/statistics_screen.dart';
 
 class HomeNavigation extends StatefulWidget {
   const HomeNavigation({super.key});

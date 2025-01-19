@@ -1,6 +1,6 @@
 class Strings {
   static const String appName = "Endol";
-  static const String ok = "Ok";
+  static const String ok = "OK";
   static const String slogan = "Don't let your expenses track you";
 
   //LOGIN SCREEN

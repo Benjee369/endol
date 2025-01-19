@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:endol/common/text_widget.dart';
 import 'package:endol/constants/app_sizes.dart';
+import 'package:endol/endol/endol_home/widgets/payment_type_radio_list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +29,12 @@ class AddExpenseModal extends StatefulWidget {
 
 class _AddExpenseModalState extends State<AddExpenseModal> {
   final amountController = TextEditingController();
+  final descriptionController = TextEditingController();
   String? categoryValue;
   DateTime? selectedDate = DateTime.now();
   late TextEditingController dateController;
   bool isLoading = false;
+  int _value = 1;
 
   //connection to database
   final storageRef = FirebaseStorage.instance.ref();
@@ -85,19 +88,33 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
     final uid = user?.uid;
 
     try {
-      if (amountController.text.isEmpty) {
-        Dialogs.dialogInform(context, 'Please enter details', () {
+      if (amountController.text.isEmpty || categoryValue!.isEmpty) {
+        Dialogs.dialogInform(context, 'Please enter all details', () {
           Navigator.pop(context);
         }, Strings.ok);
       } else {
         double value = double.parse(amountController.text);
+
+        log(
+          'uid: $uid,\n'
+          'category: $categoryValue,\n'
+          'amount: $value,\n'
+          'expenseDate: $selectedDate, \n'
+          'description: ${descriptionController.text},\n'
+          'payment_type: $_value',
+        );
+
         data.add({
           'uid': uid,
           'category': categoryValue,
           'amount': value,
           'expenseDate': selectedDate,
+          'description': descriptionController.text,
+          'payment_type': _value,
           'currentDate': DateTime.now()
         });
+        Navigator.pop(context);
+        widget.initializeFunction.call();
       }
     } catch (e) {
       log('$e');
@@ -105,8 +122,6 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
       setState(() {
         isLoading = false;
       });
-      Navigator.pop(context);
-      widget.initializeFunction.call();
     }
   }
 
@@ -184,13 +199,16 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
                 gapH12,
                 DropdownButtonHideUnderline(
                   child: DropdownButton2<String>(
-                    dropdownStyleData: const DropdownStyleData(
+                    dropdownStyleData: DropdownStyleData(
                       maxHeight: 150,
-                      decoration: BoxDecoration(color: AppColors.pureWhite),
+                      decoration: BoxDecoration(
+                        color: AppColors.pureWhite,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                     isExpanded: true,
                     hint: const TextWidget(
-                      text: ' Select Item',
+                      text: ' Select Category',
                       size: 14,
                       color: AppColors.textFieldHint,
                     ),
@@ -243,6 +261,43 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
                       ),
                     ),
                   ),
+                ),
+                gapH12,
+                AddExpenseTextField(
+                  hint: 'Description (Optional)',
+                  controller: descriptionController,
+                  inputType: TextInputType.text,
+                  isReadOnly: false,
+                ),
+                gapH12,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    PaymentTypeRadioList<int>(
+                      value: 1,
+                      groupValue: _value,
+                      leading: 'Cash',
+                      // title: Text('One'),
+                      icon: Icons.money_rounded,
+                      onChanged: (value) => setState(() => _value = value!),
+                    ),
+                    PaymentTypeRadioList<int>(
+                      value: 2,
+                      groupValue: _value,
+                      leading: 'Card',
+                      // title: Text('Two'),
+                      icon: Icons.credit_card_rounded,
+                      onChanged: (value) => setState(() => _value = value!),
+                    ),
+                    PaymentTypeRadioList<int>(
+                      value: 3,
+                      groupValue: _value,
+                      leading: 'Mobile Money',
+                      icon: Icons.attach_money_rounded,
+                      // title: Text('Two'),
+                      onChanged: (value) => setState(() => _value = value!),
+                    ),
+                  ],
                 ),
                 gapH12,
                 AddExpenseTextField(

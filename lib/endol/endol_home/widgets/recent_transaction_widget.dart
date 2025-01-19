@@ -1,12 +1,10 @@
-import 'dart:developer';
-
+import 'package:endol/endol/endol_home/function/expense_payment_type_icon.dart';
 import 'package:flutter/material.dart';
-
 import '../../../common/text_widget.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/app_sizes.dart';
 import '../function/expense_icon.dart';
-import 'custom_popup_menu.dart';
+import 'expense_details_dialog.dart';
 
 class RecentTransactionWidget extends StatelessWidget {
   const RecentTransactionWidget({
@@ -26,66 +24,10 @@ class RecentTransactionWidget extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          builder: (_) => AlertDialog(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      expenseIcon(expenses['category']),
-                      color: AppColors.thatBrown.withOpacity(0.9),
-                    ),
-                    gapW8,
-                    TextWidget(
-                      text: expenses['category'],
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ],
-                ),
-                CustomPopupMenu(
-                  onSelected: (value) {
-                    switch (value) {
-                      case 0:
-                        log('Update pressed');
-                        break;
-                      case 1:
-                        deleteFunction.call();
-                        break;
-                    }
-                  },
-                  items: [
-                    PopupMenuItemData(
-                      value: 0,
-                      icon: Icons.update_rounded,
-                      label: 'Update',
-                    ),
-                    PopupMenuItemData(
-                      value: 1,
-                      icon: Icons.delete_rounded,
-                      label: 'Delete',
-                    )
-                  ],
-                )
-              ],
-            ),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                gapH24,
-                TextWidget(
-                  text: 'K ${expenses['amount']}',
-                  size: 25,
-                  fontWeight: FontWeight.bold,
-                ),
-                gapH12,
-                TextWidget(
-                  text: formattedDate,
-                  color: AppColors.textFieldHint,
-                )
-              ],
-            ),
+          builder: (_) => ExpenseDetailsDialog(
+            expenses: expenses,
+            deleteFunction: deleteFunction,
+            formattedDate: formattedDate,
           ),
         );
       },
@@ -96,19 +38,21 @@ class RecentTransactionWidget extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: AppColors.cream,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(8),
               decoration: const ShapeDecoration(
                 color: AppColors.pureWhite,
                 shape: CircleBorder(),
               ),
               child: Icon(
                 expenseIcon(expenses['category']),
-                color: AppColors.thatBrown.withOpacity(0.9),
+                color: AppColors.thatBrown.withOpacity(0.8),
+                size: 30,
               ),
             ),
             gapW12,
@@ -126,7 +70,23 @@ class RecentTransactionWidget extends StatelessWidget {
               ],
             ),
             Spacer(),
-            TextWidget(text: formattedDate),
+            Column(
+              children: [
+                expenses['payment_type'] != null
+                    ? Icon(
+                        paymentTypeIcon(
+                          expenses['payment_type'],
+                        ),
+                        color: AppColors.thatBrown.withOpacity(0.8),
+                      )
+                    : SizedBox(),
+                TextWidget(
+                  text: formattedDate,
+                  size: 14,
+                  color: AppColors.textFieldHint,
+                ),
+              ],
+            ),
           ],
         ),
       ),

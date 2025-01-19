@@ -23,10 +23,16 @@ class Dialogs {
                         children: [
                           Icon(icon, size: iconSize, color: iconColor),
                           const SizedBox(height: 16),
-                          TextWidget(text: dialogMessage),
+                          TextWidget(
+                            text: dialogMessage,
+                          ),
                         ],
                       )
-                    : TextWidget(text: dialogMessage),
+                    : TextWidget(
+                        text: dialogMessage,
+                        fontWeight: FontWeight.bold,
+                        align: TextAlign.center,
+                      ),
                 actions: <Widget>[
                   TextButton(
                     child: Center(child: Text(text ?? Strings.ok)),
