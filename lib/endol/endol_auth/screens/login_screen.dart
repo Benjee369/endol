@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:endol/app_navigation/home_navigation.dart';
 import 'package:endol/common/dialogs.dart';
 import 'package:endol/constants/app_sizes.dart';
+import 'package:endol/endol/endol_auth/functions/login_error_switch_case.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:endol/app_navigation/navigation.dart';
@@ -11,7 +12,6 @@ import 'package:endol/constants/strings.dart';
 import 'package:endol/common/text_field_custom.dart';
 import 'package:endol/common/button_primary.dart';
 import 'package:extended_image/extended_image.dart';
-
 import 'create_account_screen.dart';
 import '../services/firebase_auth_services.dart';
 
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       log('Failed to login: $e');
       if (mounted) {
-        Dialogs.dialogInform(context, '$e', () {
+        Dialogs.dialogInform(context, loginError('$e'), () {
           Navigator.pop(context);
         }, Strings.ok);
       }

@@ -18,7 +18,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    _checkToken();
+    Future.delayed(
+      Duration(milliseconds: 3000),
+      () {
+        _checkToken();
+      },
+    );
     super.initState();
   }
 

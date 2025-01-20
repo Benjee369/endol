@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import '../../../common/text_widget.dart';
 import '../../../constants/app_colors.dart';
 
 class ChartScreen extends StatefulWidget {
@@ -25,10 +26,6 @@ class _ChartScreenState extends State<ChartScreen> {
   final storageRef =
       FirebaseFirestore.instance.collection(Strings.expenseDatabase);
 
-  // final userData = FirebaseFirestore.instance
-  //     .collection(Strings.expenseDatabase)
-  //     .doc(FirebaseAuth.instance.currentUser?.uid);
-
   //Function to group docs by category and sum up the amounts
   Map<String, double> groupExpenses(List<Map<String, dynamic>> expenses) {
     return expenses.groupFoldBy(
@@ -38,6 +35,7 @@ class _ChartScreenState extends State<ChartScreen> {
     );
   }
 
+  //Function to get user expenses
   Future<void> _getUserExpenses() async {
     log('Get expense function triggered');
     final User? user = auth.currentUser;
@@ -51,7 +49,6 @@ class _ChartScreenState extends State<ChartScreen> {
     try {
       QuerySnapshot querySnapshot =
           await storageRef.where('uid', isEqualTo: uid).get();
-      // log('The expense data: $querySnapshot');
 
       if (querySnapshot.docs.isNotEmpty) {
         expenseData = querySnapshot.docs
@@ -59,32 +56,10 @@ class _ChartScreenState extends State<ChartScreen> {
             .toList();
 
         categoryTotals = groupExpenses(expenseData);
-        // = groupExpenses(expenseData);
 
         log('$categoryTotals');
-        // log('${categoryTotals.runtimeType}');
         final double total = categoryTotals.values.reduce((a, b) => a + b);
         log('The total is $total');
-        //
-        // categoryTotals.forEach((category, total) {
-        //   log('$category: \$${total.toStringAsFixed(2)}');
-        // });
-
-        // for (var doc in querySnapshot.docs) {
-        //   expenseData = doc.data() as Map<String, dynamic>;
-        //   log('Category ${expenseData?['category']}, Amount${expenseData?['amount']}');
-        //   log('${expenseData?.length}');
-        // }
-        // for (var expense in expenseData) {
-        //   var data = expenseData
-        //       .where((element) => element['category'] == expense['category']);
-        //   if (data.isEmpty) {
-        //     expenseData.add(expense);
-        //   } else {
-        //     log('${data.runtimeType}');
-        //   }
-        // }
-        // log('${expenseData[1]['uid']}');
       } else {
         log('Collection is empty ');
       }
@@ -108,62 +83,27 @@ class _ChartScreenState extends State<ChartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Charts'),
-      body:
-          // ButtonPrimary(
-          //     active: true,
-          //     width: 200,
-          //     text: 'Test',
-          //     function: () {
-          //       _getUserExpenses();
-          //     }),
-          isLoading
-              ? Dialogs.loadingInScreen()
-              : SafeArea(
-                  child: PieChart(
-                    PieChartData(
-                      sections: getSections(categoryTotals),
-                      centerSpaceRadius: 50,
-                      sectionsSpace: 2,
+      appBar: CustomAppBar(title: 'Statistics'),
+      body: isLoading
+          ? Dialogs.loadingInScreen()
+          : SafeArea(
+              child: Column(
+                children: [
+                  TextWidget(text: 'Expenses'),
+                  SizedBox(
+                    height: 200,
+                    width: 200,
+                    child: PieChart(
+                      PieChartData(
+                        sections: getSections(categoryTotals),
+                        centerSpaceRadius: 20,
+                        sectionsSpace: 2,
+                      ),
                     ),
                   ),
-                  // child: StreamBuilder<QuerySnapshot>(
-                  //   stream: storageRef.snapshots(),
-                  //   builder: (context, snapshot) {
-                  //     if (snapshot.connectionState == ConnectionState.waiting) {
-                  //       return const CircularProgressIndicator();
-                  //     }
-                  //     if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  //       return const TextWidget(text: 'Empty');
-                  //     }
-                  //     return ListView(
-                  //       children: snapshot.data!.docs.map((doc) {
-                  //         final expense = doc.data() as Map<String, dynamic>;
-                  //         DateTime dateTime = expense['expenseDate'].toDate();
-                  //         String formattedDate =
-                  //             DateFormat('MM, dd, yyyy').format(dateTime);
-                  //
-                  //         log('$dateTime');
-                  //         return Row(
-                  //           children: [
-                  //             const Icon(Icons.abc),
-                  //             Column(
-                  //               children: [
-                  //                 TextWidget(text: expense['category']),
-                  //                 TextWidget(text: formattedDate)
-                  //               ],
-                  //             )
-                  //           ],
-                  //         );
-                  //         //   ListTile(
-                  //         //   title: Text(expense['category']),
-                  //         //   subtitle: Text('Amount: ${expense['amount']}'),
-                  //         // );
-                  //       }).toList(),
-                  //     );
-                  //   },
-                  // ),
-                ),
+                ],
+              ),
+            ),
     );
   }
 
@@ -186,7 +126,7 @@ class _ChartScreenState extends State<ChartScreen> {
         title: entry.key,
         radius: 50,
         titleStyle: TextStyle(
-          fontSize: 14,
+          fontSize: 10,
           fontWeight: FontWeight.bold,
           color: AppColors.pureWhite,
         ),

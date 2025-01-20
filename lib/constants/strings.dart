@@ -2,6 +2,8 @@ class Strings {
   static const String appName = "Endol";
   static const String ok = "OK";
   static const String slogan = "Don't let your expenses track you";
+  static const String somethingWentWrong =
+      "Something went wrong, Please try again";
 
   //LOGIN SCREEN
   static const String emailAddress = "Email Address";

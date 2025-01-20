@@ -12,7 +12,6 @@ import '../../../common/dialogs.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/strings.dart';
 import 'package:intl/intl.dart';
-
 import 'add_expense_text_field.dart';
 
 class AddExpenseModal extends StatefulWidget {
@@ -136,7 +135,6 @@ class _AddExpenseModalState extends State<AddExpenseModal> {
 
     setState(() {
       selectedDate = picked;
-      log('$selectedDate-----------------------');
       dateController.text = DateFormat('yyyy/MM/dd').format(selectedDate!);
     });
   }

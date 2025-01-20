@@ -24,7 +24,7 @@ class CreateAccountScreen extends StatefulWidget {
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final FirebaseAuthServices _auth = FirebaseAuthServices();
 
-  final fullNameController = TextEditingController();
+  // final fullNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -77,10 +77,10 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             child: Column(
               children: [
                 // Logo
-                ExtendedImage.asset(
-                  AppImages.logo,
-                  scale: 6,
-                ),
+                // ExtendedImage.asset(
+                //   AppImages.logo,
+                //   scale: 6,
+                // ),
                 const SizedBox(height: 100),
                 // Title and slogan
                 ExtendedImage.asset(AppImages.endolSign),
@@ -88,12 +88,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 ExtendedImage.asset(AppImages.slogan),
                 gapH48,
                 // FullName input
-                TextFieldCustom(
-                  hint: Strings.fullName,
-                  controller: fullNameController,
-                  inputType: TextInputType.emailAddress,
-                ),
-                gapH16,
+                // TextFieldCustom(
+                //   hint: Strings.fullName,
+                //   controller: fullNameController,
+                //   inputType: TextInputType.emailAddress,
+                // ),
+                // gapH16,
                 // Email Address input
                 TextFieldCustom(
                   hint: Strings.emailAddress,
