@@ -54,10 +54,9 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC5g6T7GdLuMLyiTCIA_zJgcQ9OMw84jds',
-    appId: '1:560636145219:android:54cfabad88023e42e36ef6',
+    appId: '1:560636145219:android:f45bc8efec60810fe36ef6',
     messagingSenderId: '560636145219',
     projectId: 'endol-6183d',
-    storageBucket: 'endol-6183d.appspot.com',
+    storageBucket: 'endol-6183d.firebasestorage.app',
   );
-
 }
