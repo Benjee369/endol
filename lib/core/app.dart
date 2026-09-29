@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:endol/constants/app_colors.dart';
 import 'package:endol/constants/fonts.dart';
 import 'package:endol/providers/budget_provider.dart';
@@ -7,7 +6,6 @@ import 'package:endol/providers/current_index_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import '../endol/endol_auth/screens/splash_screen.dart';
 
 class App extends StatefulWidget {
@@ -20,7 +18,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     log('App ran');
   }

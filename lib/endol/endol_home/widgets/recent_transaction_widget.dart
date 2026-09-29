@@ -24,18 +24,16 @@ class RecentTransactionWidget extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          builder: (_) => ExpenseDetailsDialog(
-            expenses: expenses,
-            deleteFunction: deleteFunction,
-            formattedDate: formattedDate,
-          ),
+          builder:
+              (_) => ExpenseDetailsDialog(
+                expenses: expenses,
+                deleteFunction: deleteFunction,
+                formattedDate: formattedDate,
+              ),
         );
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 8,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         decoration: BoxDecoration(
           color: AppColors.cream,
           borderRadius: BorderRadius.circular(12),
@@ -71,14 +69,13 @@ class RecentTransactionWidget extends StatelessWidget {
             ),
             Spacer(),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 expenses['payment_type'] != null
                     ? Icon(
-                        paymentTypeIcon(
-                          expenses['payment_type'],
-                        ),
-                        color: AppColors.thatBrown.withOpacity(0.8),
-                      )
+                      paymentTypeIcon(expenses['payment_type']),
+                      color: AppColors.thatBrown.withOpacity(0.8),
+                    )
                     : SizedBox(),
                 TextWidget(
                   text: formattedDate,

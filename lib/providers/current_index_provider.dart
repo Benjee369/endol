@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+  import 'package:flutter/material.dart';
 
 class CurrentIndexProvider extends ChangeNotifier {
   int _currentIndex = 0;

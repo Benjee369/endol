@@ -74,8 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
   //function to get the budget
   Future<void> getBudget() async {
     try {
-      final budgetProvider =
-          Provider.of<BudgetProvider>(context, listen: false);
+      final budgetProvider = Provider.of<BudgetProvider>(
+        context,
+        listen: false,
+      );
       final amount = budgetProvider.budgetAmount;
 
       log('${user?.email}');
@@ -86,8 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
         if (data.exists) {
           budgetAmount = data['budget'];
           if (mounted) {
-            Provider.of<BudgetProvider>(context, listen: false)
-                .setBudget(budgetAmount!);
+            Provider.of<BudgetProvider>(
+              context,
+              listen: false,
+            ).setBudget(budgetAmount!);
           }
         }
       }
@@ -110,21 +114,23 @@ class _HomeScreenState extends State<HomeScreen> {
     totalSpent = 0.0;
 
     try {
-      QuerySnapshot querySnapshot = await data
-          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-          .orderBy('currentDate', descending: true)
-          .get();
+      QuerySnapshot querySnapshot =
+          await data
+              .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+              .orderBy('currentDate', descending: true)
+              .get();
 
       for (var doc in querySnapshot.docs) {
         double value = doc['amount'];
         totalSpent += value;
       }
       if (querySnapshot.docs.isNotEmpty) {
-        expenseData = querySnapshot.docs.map((doc) {
-          Map<String, dynamic> expense = doc.data() as Map<String, dynamic>;
-          expense['id'] = doc.id;
-          return expense;
-        }).toList();
+        expenseData =
+            querySnapshot.docs.map((doc) {
+              Map<String, dynamic> expense = doc.data() as Map<String, dynamic>;
+              expense['id'] = doc.id;
+              return expense;
+            }).toList();
         // log('${expenseData[0].}');
       } else {
         expenseData = [];
@@ -140,9 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future deleteTransaction(String id) async {
     log('Delete function triggered');
 
-    await data.doc(id).delete().then(
-          (_) => log('Document $id deleted'),
-        );
+    await data.doc(id).delete().then((_) => log('Document $id deleted'));
     initialise();
     if (mounted) {
       Navigator.pop(context);
@@ -204,20 +208,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         TextWidget(
                           text: Strings.startTracking,
                           color: AppColors.lightBrown,
-                        )
+                        ),
                       ],
                     ),
                     InkWell(
-                      onTap: () => showMaterialModalBottomSheet(
-                        expand: false,
-                        context: context,
-                        backgroundColor: Colors.transparent,
-                        builder: (context) => AddExpenseModal(
-                          initializeFunction: () {
-                            initialise();
-                          },
-                        ),
-                      ),
+                      onTap:
+                          () => showMaterialModalBottomSheet(
+                            expand: false,
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            builder:
+                                (context) => AddExpenseModal(
+                                  initializeFunction: () {
+                                    initialise();
+                                  },
+                                ),
+                          ),
                       child: Container(
                         width: 90,
                         decoration: BoxDecoration(
@@ -225,12 +231,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: AppColors.thatBrown,
                         ),
                         padding: const EdgeInsets.all(12),
-                        child: const Icon(
-                          Icons.add,
-                          color: AppColors.cream,
-                        ),
+                        child: const Icon(Icons.add, color: AppColors.cream),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -250,58 +253,65 @@ class _HomeScreenState extends State<HomeScreen> {
               gapH12,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: isLoading
-                    ? Dialogs.loadingInScreen()
-                    : expenseData.isEmpty
+                child:
+                    isLoading
+                        ? Dialogs.loadingInScreen()
+                        : expenseData.isEmpty
                         ? TextWidget(text: 'No Expenses')
                         : RefreshIndicator(
-                            onRefresh: initialise,
-                            color: AppColors.thatBrown,
-                            backgroundColor: AppColors.pureWhite,
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              itemCount: expenseData.length < 5
-                                  ? expenseData.length
-                                  : 5,
-                              itemBuilder: (context, index) {
-                                final expenses = expenseData[index];
+                          onRefresh: initialise,
+                          color: AppColors.thatBrown,
+                          backgroundColor: AppColors.pureWhite,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            itemCount:
+                                expenseData.length < 5 ? expenseData.length : 5,
+                            itemBuilder: (context, index) {
+                              final expenses = expenseData[index];
 
-                                log('${expenses['id']}');
-                                DateTime dateTime =
-                                    expenses['expenseDate'].toDate();
+                              log('${expenses['id']}');
+                              DateTime dateTime =
+                                  expenses['expenseDate'].toDate();
 
-                                DateTime now = DateTime.now();
-                                DateTime today =
-                                    DateTime(now.year, now.month, now.day);
+                              DateTime now = DateTime.now();
+                              DateTime today = DateTime(
+                                now.year,
+                                now.month,
+                                now.day,
+                              );
 
-                                DateTime orderDateMidnight = DateTime(
-                                    dateTime.year,
-                                    dateTime.month,
-                                    dateTime.day);
-                                String formattedDate;
+                              DateTime orderDateMidnight = DateTime(
+                                dateTime.year,
+                                dateTime.month,
+                                dateTime.day,
+                              );
+                              String formattedDate;
 
-                                if (orderDateMidnight == today) {
-                                  formattedDate =
-                                      "Today at ${DateFormat('hh:mm a').format(dateTime)}";
-                                } else {
-                                  formattedDate = DateFormat('MMM dd, yyyy')
-                                      .format(dateTime);
-                                }
-                                return RecentTransactionWidget(
-                                  expenses: expenses,
-                                  formattedDate: formattedDate,
-                                  deleteFunction: () {
-                                    deleteTransaction(expenses['id']);
-                                  },
-                                );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return gapH12;
-                              },
-                            ),
+                              if (orderDateMidnight == today) {
+                                formattedDate =
+                                    "Today at ${DateFormat('hh:mm a').format(dateTime)}";
+                              } else {
+                                formattedDate = DateFormat(
+                                  'MMM dd, yyyy',
+                                ).format(dateTime);
+                              }
+                              return RecentTransactionWidget(
+                                expenses: expenses,
+                                formattedDate: formattedDate,
+                                deleteFunction: () {
+                                  deleteTransaction(expenses['id']);
+                                },
+                              );
+                            },
+                            separatorBuilder: (
+                              BuildContext context,
+                              int index,
+                            ) {
+                              return gapH12;
+                            },
                           ),
-              )
+                        ),
+              ),
             ],
           ),
         ),

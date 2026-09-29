@@ -1,3 +1,4 @@
+import 'package:endol/common/text_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants/app_colors.dart';
@@ -27,13 +28,9 @@ class CustomPopupMenu extends StatelessWidget {
                 value: item.value,
                 child: Row(
                   children: [
-                    Icon(
-                      item.icon,
-                      size: 20,
-                      color: AppColors.thatBrown,
-                    ),
+                    Icon(item.icon, size: 20, color: AppColors.thatBrown),
                     gapW8,
-                    Text(item.label),
+                    TextWidget(text: item.label),
                   ],
                 ),
               ),

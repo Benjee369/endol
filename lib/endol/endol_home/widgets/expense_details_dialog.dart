@@ -25,7 +25,7 @@ class ExpenseDetailsDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            children: [
+            children:  [
               Icon(
                 expenseIcon(expenses['category']),
                 color: AppColors.thatBrown.withOpacity(0.9),
